@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Product, Order, Salary, SalaryStatistics } from './statistics.types';
+import { Product, Order, Salary, SalaryStatistics } from './statistics.types.js';
 
 @Injectable()
 export class StatisticsService {

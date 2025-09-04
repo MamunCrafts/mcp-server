@@ -21,67 +21,120 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+# Statistics MCP Server
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a Model Context Protocol (MCP) server that provides statistics tools for analyzing sales data and salary information. It can be connected to AI editors like Cursor, Claude Desktop, and other MCP-compatible applications.
 
-## Project setup
+## Features
 
+The MCP server exposes the following tools:
+
+- **get_total_sales**: Calculate total sales amount from all orders
+- **get_popular_product**: Find the most popular product (appears in most orders)
+- **get_most_ordered_product**: Get the product with highest total quantity ordered
+- **get_highest_order_amount**: Find the order with the highest total amount
+- **get_salary_statistics**: Get salary statistics (average, min, max)
+
+## Setup
+
+1. Install dependencies:
 ```bash
-$ npm install
+npm install
 ```
 
-## Compile and run the project
-
+2. Build the project:
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm run build
 ```
 
-## Run tests
+## Running the Server
 
+### As HTTP API (NestJS)
 ```bash
-# unit tests
-$ npm run test
+npm run start:dev
+```
+The HTTP API will be available at `http://localhost:3000/statistics`
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+### As MCP Server
+```bash
+npm run start:mcp
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+For development with auto-reload:
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run start:mcp:dev
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Connecting to Editors
 
-## Resources
+### Cursor IDE
 
-Check out a few resources that may come in handy when working with NestJS:
+1. Open Cursor settings (Cmd/Ctrl + ,)
+2. Search for "MCP" or go to Extensions > Model Context Protocol
+3. Add a new server configuration:
+   - **Name**: Statistics Server
+   - **Command**: `node`
+   - **Args**: `["/absolute/path/to/your/project/dist/mcp-main.js"]`
+   - **Working Directory**: `/absolute/path/to/your/project`
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Claude Desktop
+
+Add this to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "statistics-server": {
+      "command": "node",
+      "args": ["/absolute/path/to/your/project/dist/mcp-main.js"],
+      "env": {}
+    }
+  }
+}
+```
+
+**Location of config file:**
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%/Claude/claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+### Other MCP-Compatible Editors
+
+Use the provided `mcp-config.json` file as a reference and adapt the configuration format as needed for your specific editor.
+
+## Usage Examples
+
+Once connected, you can ask your AI assistant to:
+
+- "What are the total sales?"
+- "Which product is most popular?"
+- "Show me salary statistics"
+- "What's the highest order amount?"
+
+The MCP server will execute the appropriate tools and return the results.
+
+## Development
+
+The project structure:
+- `src/mcp/mcp-server.ts` - MCP server implementation
+- `src/mcp-main.ts` - MCP server entry point
+- `src/statistics/` - Business logic and data
+- `mcp-config.json` - Example MCP configuration
+
+## Troubleshooting
+
+1. **Build errors**: Make sure all TypeScript files compile correctly with `npm run build`
+2. **Connection issues**: Verify the absolute path to `dist/mcp-main.js` in your editor configuration
+3. **Permission errors**: Ensure the compiled JavaScript files have execute permissions
+
+## API Endpoints (HTTP Mode)
+
+When running as HTTP API:
+- `GET /statistics/total-sales`
+- `GET /statistics/popular-product`
+- `GET /statistics/most-ordered-product`
+- `GET /statistics/highest-order-amount`
+- `GET /statistics/salary-statistics`
 
 ## Support
 

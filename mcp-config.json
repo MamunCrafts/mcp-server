@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "statistics-server": {
+      "command": "node",
+      "args": ["/home/mamun/official/mcp-server/dist/mcp-main.js"],
+      "env": {}
+    }
+  }
+}

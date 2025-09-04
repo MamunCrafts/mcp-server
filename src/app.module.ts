@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { StatisticsModule } from './statistics/statistics.module';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { StatisticsModule } from './statistics/statistics.module.js';
 
 @Module({
   imports: [StatisticsModule],

@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { StatisticsService } from './statistics.service';
-import { Product, Order, SalaryStatistics } from './statistics.types';
+import { StatisticsService } from './statistics.service.js';
+import { Product, Order, SalaryStatistics } from './statistics.types.js';
 
 @Controller('statistics')
 export class StatisticsController {
